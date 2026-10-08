@@ -75,13 +75,13 @@ body.md-body {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  max-width: 680px;
+  max-width: 900px;
   margin: 0 auto;
   background-color: var(--g-canvas);
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.05);
 }
 
-@media (min-width: 681px) {
+@media (min-width: 901px) {
   body.g-body {
     background-color: #eef2f6;
   }
@@ -89,8 +89,12 @@ body.md-body {
     background-color: #0c0d10;
   }
   .g-app-shell {
-    border-left: 1px solid var(--g-border);
-    border-right: 1px solid var(--g-border);
+    border: 1px solid var(--g-border);
+    margin-top: 20px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+    min-height: calc(100vh - 48px);
+    overflow: hidden;
   }
 }
 
