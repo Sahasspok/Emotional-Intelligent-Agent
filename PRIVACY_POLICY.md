@@ -40,7 +40,7 @@ We strictly adhere to privacy-by-design principles:
 * **`tabs`**: Used strictly to open or focus the extension's workspace tab and to insert user-approved drafted text into the active compose field on your command.
 * **`storage`**: Used to save your chosen mode, local settings, and optional API keys directly within your private local browser profile.
 * **`contextMenus`**: Allows you to right-click highlighted message text on a page and send it directly to the assistant for reply drafting.
-* **`activeTab` & `scripting`**: Used only when you interact with the extension to read selected message text or insert the approved response into compose inputs (e.g., Gmail, Slack, LinkedIn).
+* **`activeTab`**: Used only when you interact with the extension to read selected message text or insert the approved response into compose inputs (e.g., Gmail, Slack, LinkedIn).
 * **Host Permissions**: Limited to official AI provider endpoints (`generativelanguage.googleapis.com`, `api.openai.com`, `api.anthropic.com`, `api.mistral.ai`, and localhost for Ollama) to allow direct browser-to-API communication when you opt into cloud model execution.
 
 ---

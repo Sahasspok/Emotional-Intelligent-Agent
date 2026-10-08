@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Agentic EQ Reply — Professional Communications Assistant",
   "short_name": "Agentic EQ Reply",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Draft emotionally intelligent, executive replies for email and chat with RAG-grounded multi-agent EQ protocols.",
   "homepage_url": "https://github.com/Sahasspok/Emotional-Intelligent-Agent",
   "minimum_chrome_version": "116",
@@ -54,8 +54,7 @@
     "tabs",
     "storage",
     "contextMenus",
-    "activeTab",
-    "scripting"
+    "activeTab"
   ],
   "host_permissions": [
     "https://api.openai.com/*",
