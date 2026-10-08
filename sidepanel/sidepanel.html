@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic EQ Reply</title>
+  <!-- Google Product Typography (Google Sans & Google Sans Text) & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400..600,0..1,0&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sidepanel.css">
+  <script src="../lib/chrome_shim.js"></script>
+</head>
+<body class="g-body md-body">
+  <div class="g-app-shell md-app-shell">
+    
+    <!-- Top App Bar -->
+    <header class="g-top-app-bar md-top-app-bar">
+      <div class="g-app-bar-leading md-app-bar-leading">
+        <div class="g-app-logo md-app-logo">
+          <img src="../lib/icons/icon32.png" alt="Logo">
+        </div>
+        <div class="g-app-titles md-app-titles">
+          <span class="g-app-title md-app-title">Agentic EQ Reply</span>
+          <span class="g-app-subtitle md-app-subtitle">Managerial Intelligence Workspace</span>
+        </div>
+      </div>
+
+      <div class="g-app-bar-trailing md-app-bar-trailing">
+        <div id="engineStatusPill" class="g-badge g-badge-offline md-badge md-badge-offline" title="Active Engine Status">
+          <span class="g-badge-dot md-badge-dot"></span>
+          <span id="engineStatusText">Local Fallback</span>
+        </div>
+        <button id="themeToggleBtn" class="g-icon-btn md-icon-button" title="Toggle Theme" aria-label="Toggle Theme">
+          <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+        <button id="openBenchmarksBtn" class="g-icon-btn md-icon-button" title="Regression Benchmarks" aria-label="Benchmarks">
+          <span class="material-symbols-outlined">analytics</span>
+        </button>
+        <button id="openOptionsBtn" class="g-icon-btn md-icon-button" title="Settings & Connect Agents" aria-label="Settings">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Persistent But Dismissible Local Fallback Banner -->
+    <aside id="fallbackCalloutBanner" class="g-banner-callout md-banner-callout" role="alert">
+      <div class="g-banner-icon md-banner-icon">
+        <span class="material-symbols-outlined g-icon-alert md-icon-alert">info</span>
+      </div>
+      <div class="g-banner-content md-banner-content">
+        <p class="g-banner-text md-banner-text">You are on local fallback. Connect an AI agent (Mistral, OpenAI, Gemini) or attach your GitHub repo for deeper research and multi-agent QA verification.</p>
+        <div class="g-banner-actions md-banner-actions">
+          <button id="bannerConnectBtn" class="g-btn g-btn-primary g-btn-sm md-filled-button md-button-sm md-btn-accent">Connect Agent</button>
+          <button id="bannerDismissBtn" class="g-btn g-btn-secondary g-btn-sm md-text-button md-button-sm">Continue Local</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Inline Error & Notice Card (Eliminates jarring browser alert popups) -->
+    <aside id="errorNoticeCard" class="g-banner-callout g-banner-error" style="display:none;" role="alert">
+      <div class="g-banner-icon">
+        <span class="material-symbols-outlined g-icon-error">error</span>
+      </div>
+      <div class="g-banner-content">
+        <div class="g-error-header-row">
+          <strong id="errorCardTitle" class="g-error-title">Notice</strong>
+          <button type="button" id="btnDismissErrorCard" class="g-error-close-btn" title="Dismiss" aria-label="Dismiss">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <p id="errorCardMessage" class="g-banner-text">An error occurred while generating the reply.</p>
+        <div class="g-banner-actions">
+          <button type="button" id="btnErrorFallback" class="g-btn g-btn-primary g-btn-sm">
+            <span class="material-symbols-outlined g-btn-icon">memory</span>
+            <span>Switch to Local Fallback &amp; Generate</span>
+          </button>
+          <button type="button" id="btnErrorEditSettings" class="g-btn g-btn-secondary g-btn-sm">
+            <span class="material-symbols-outlined g-btn-icon">tune</span>
+            <span>Review Agent Config</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Viewport Canvas -->
+    <main class="g-main-content md-main-content">
+
+      <!-- ==========================================
+           VIEW 1: PROMPT CANVAS (INPUT & CONTEXT)
+           ========================================== -->
+      <section id="promptCanvasView" class="g-card g-elevated-card md-card md-elevated-card active">
+        
+        <!-- Step 1: Active Execution Engine Setting Card (Clean Setting-First View) -->
+        <div class="g-section-row md-section-row">
+          <div class="g-section-meta md-section-meta">
+            <h2 class="g-section-title md-section-title">1. Execution Engine</h2>
+            <p class="g-section-helper md-section-helper">Current engine mode powering draft generation and EQ checks</p>
+          </div>
+
+          <div class="g-setting-card" id="activeSettingCard" role="region" aria-label="Active Execution Engine Setting" tabindex="0">
+            <div class="g-setting-card-leading">
+              <div class="g-setting-icon-box" id="activeModeIconBox">
+                <span class="material-symbols-outlined" id="activeModeIcon">memory</span>
+              </div>
+              <div class="g-setting-details">
+                <div class="g-setting-title-row">
+                  <span class="g-setting-title" id="activeModeTitle">Local Offline Fallback</span>
+                  <span class="g-badge g-badge-offline" id="activeModeBadge">Active</span>
+                </div>
+                <p class="g-setting-subtitle" id="activeModeSubtitle">Deterministic EQ rules &amp; offline handbook grounding</p>
+              </div>
+            </div>
+            <div class="g-setting-card-trailing">
+              <button type="button" id="btnConfigureEngine" class="g-btn g-btn-secondary g-btn-sm" title="Configure or change mode in Settings">
+                <span class="material-symbols-outlined g-btn-icon">tune</span>
+                <span>Change Mode &rarr;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Message Context Input -->
+        <div class="g-section-row md-section-row">
+          <div class="g-section-meta md-section-meta">
+            <div class="g-section-title-bar md-section-title-bar">
+              <div>
+                <h2 class="g-section-title md-section-title">2. Message Context</h2>
+                <p class="g-section-helper md-section-helper">Paste incoming email, Slack message, ticket notes, or review situation</p>
+              </div>
+              <div class="g-context-actions md-context-actions">
+                <select id="quickSeedContextSelect" class="g-select-input g-select-sm" title="Seed realistic test context">
+                  <option value="" disabled selected>⚡ Seed Test Context...</option>
+                  <option value="amit_alex">PM Amit → Client Alex Escalation</option>
+                  <option value="black_friday">Black Friday Outage &amp; Breach Threat</option>
+                  <option value="task_conflict">MongoDB vs PostgreSQL Tech Conflict</option>
+                  <option value="vp_pressure">VP Weekend Board Demo Demand</option>
+                  <option value="team_burnout">Late Night Team Burnout &amp; Overload</option>
+                  <option value="harassment_report">Harassment Complaint Formal Escalation</option>
+                  <option value="toxic_performer">Toxic High-Performer Conduct Governance</option>
+                  <option value="remote_disconnect">Remote Team Collaboration Disconnect</option>
+                  <option value="budget_cut">Emergency 20% Budget Cut Communication</option>
+                </select>
+                <button id="btnQuickGrabSelection" class="g-btn g-btn-secondary g-btn-sm" title="Grab highlighted text from webpage">
+                  <span class="material-symbols-outlined g-btn-icon">content_paste</span>
+                  <span>Grab Selection</span>
+                </button>
+                <label class="g-btn g-btn-secondary g-btn-sm" for="quickFileInput" title="Attach context file (TXT, MD, PDF)">
+                  <span class="material-symbols-outlined g-btn-icon">attach_file</span>
+                  <span>Attach File (TXT/PDF)</span>
+                  <input type="file" id="quickFileInput" accept=".txt,.md,.docx,.pdf,.json" style="display:none;">
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="g-input-card-box md-text-field-container">
+            <textarea id="mainContextInput" class="g-textarea-main md-text-area" rows="6" placeholder="Paste the incoming message thread, employee situation, or customer escalation here..."></textarea>
+            <div class="g-textarea-footer md-field-footer">
+              <span id="quickWordCount" class="g-word-count-tag md-count-label">0 words</span>
+              <span id="riskIndicatorText" class="g-risk-alert-tag md-risk-badge" style="display:none;">
+                <span class="material-symbols-outlined g-icon-alert-sm md-icon-alert-sm">warning</span>
+                <span id="riskFlagLabel">Boundary Notice</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Managerial Goal Selection (Tactile Button Grid) -->
+        <div class="g-section-row md-section-row">
+          <div class="g-section-meta md-section-meta">
+            <h2 class="g-section-title md-section-title">3. Managerial Goal</h2>
+            <p class="g-section-helper md-section-helper">Select the primary managerial outcome anchored to Handbook protocols</p>
+          </div>
+
+          <!-- Structured Tactile Button Grid -->
+          <div class="g-goal-buttons-grid" id="goalChipsContainer">
+            <button type="button" class="g-goal-btn active" data-goal="de-escalate_and_set_boundaries">
+              <span class="g-check-icon">✓</span>
+              <span>De-escalate & Set Boundaries</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="resolve_task_conflict">
+              <span class="g-check-icon">✓</span>
+              <span>Resolve Technical Conflict</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="negotiate_upward_tradeoffs">
+              <span class="g-check-icon">✓</span>
+              <span>Negotiate Upward Demands</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="diagnose_burnout_and_rebalance_workload">
+              <span class="g-check-icon">✓</span>
+              <span>Team Burnout & Overload</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="performance_alignment">
+              <span class="g-check-icon">✓</span>
+              <span>Performance Alignment & Review</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="disciplinary_conversation">
+              <span class="g-check-icon">✓</span>
+              <span>Disciplinary & PIP Protocol</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="layoff_and_restructuring">
+              <span class="g-check-icon">✓</span>
+              <span>Layoff & Restructuring Message</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="remote_hybrid_disconnect">
+              <span class="g-check-icon">✓</span>
+              <span>Remote & Hybrid Disconnect</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="cross_cultural_misunderstanding">
+              <span class="g-check-icon">✓</span>
+              <span>Cross-Cultural Communication</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="formal_safety_escalation">
+              <span class="g-check-icon">✓</span>
+              <span>Statutory Safety & HR Escalation</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="toxic_high_performer_conduct_governance">
+              <span class="g-check-icon">✓</span>
+              <span>Toxic High-Performer Conduct</span>
+            </button>
+            <button type="button" class="g-goal-btn" data-goal="budget_cut_resource_reduction">
+              <span class="g-check-icon">✓</span>
+              <span>Budget Cuts & Resource Limits</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Channel Format (Tactile Segmented Bar) -->
+        <div class="g-section-row md-section-row">
+          <div class="g-section-meta md-section-meta">
+            <h2 class="g-section-title md-section-title">4. Channel Format</h2>
+          </div>
+
+          <div class="g-segmented-button-container md-segmented-control-full" id="channelSegmentedControl">
+            <button type="button" class="g-segmented-btn active" data-channel="email">Email</button>
+            <button type="button" class="g-segmented-btn" data-channel="slack">Slack</button>
+            <button type="button" class="g-segmented-btn" data-channel="linkedin">LinkedIn</button>
+            <button type="button" class="g-segmented-btn" data-channel="support">Support</button>
+            <button type="button" class="g-segmented-btn" data-channel="strategy">Strategy</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Magic Action Hero Button -->
+        <div class="g-action-hero-bar md-action-hero-bar">
+          <button id="btnGenerateMagic" class="g-btn g-btn-primary g-btn-hero md-hero-button">
+            <span class="material-symbols-outlined g-sparkle-icon">auto_awesome</span>
+            <span>Generate EQ Reply</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           VIEW 2: ENTERPRISE PROCESSING VIEW
+           ========================================== -->
+      <section id="flowLoadingView" class="g-card g-elevated-card g-loading-view md-card md-elevated-card md-loading-view" style="display:none;">
+        <div class="g-loading-center md-loading-center">
+          <div class="g-loading-icon-wrap">
+            <span class="material-symbols-outlined g-loading-spin">refresh</span>
+          </div>
+          <h2 class="g-loading-title md-loading-title" id="loadingStageTitle">Retrieving Managerial EQ Knowledge...</h2>
+          <p class="g-loading-subtitle md-loading-subtitle" id="loadingStageDesc">Running hybrid semantic search across the Managerial EQ Handbook.</p>
+          <div class="g-linear-progress md-linear-progress">
+            <div id="m3ProgressBar" class="g-progress-bar md-progress-bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           VIEW 3: RESULTS CANVAS (DELIVERY)
+           ========================================== -->
+      <section id="flowResultView" class="g-card g-elevated-card g-result-view md-card md-elevated-card md-result-view" style="display:none;">
+        
+        <!-- Result Header Badges -->
+        <div class="g-result-header-bar md-result-header-bar">
+          <div class="g-meta-badges md-meta-badges">
+            <span id="resultCitationPill" class="g-meta-tag tag-teal md-meta-tag">Client Escalation Protocol</span>
+            <span id="resultQAScoreBadge" class="g-meta-tag tag-green md-meta-tag">96/100 PASSED</span>
+          </div>
+          <button id="btnStartOver" class="g-btn g-btn-secondary g-btn-sm md-text-button md-button-sm">
+            <span class="material-symbols-outlined g-btn-icon">refresh</span>
+            <span>New Reply</span>
+          </button>
+        </div>
+
+        <!-- Fallback Notice Ribbon -->
+        <div id="resultFallbackBanner" class="g-banner-ribbon md-banner-ribbon" style="display:none;">
+          <span class="material-symbols-outlined g-ribbon-icon md-ribbon-icon">info</span>
+          <span class="g-ribbon-text md-ribbon-text">Generated via local fallback — lower confidence. Connect an agent for deeper AI research and multi-agent QA.</span>
+          <a href="#" id="resultConnectAgentLink" class="g-ribbon-link md-ribbon-link">Connect Agent &rarr;</a>
+        </div>
+
+        <!-- Generated Response Card -->
+        <div class="g-output-container md-output-container">
+          <div id="outputSubjectHeader" class="g-output-subject md-output-subject" style="display:none;"></div>
+          <div id="outputReplyBody" class="g-output-body-text md-output-body-text" contenteditable="true"></div>
+        </div>
+
+        <!-- Primary Actions Bar -->
+        <div class="g-result-actions-bar md-result-actions-bar">
+          <button id="btnInsertDirect" class="g-btn g-btn-accent g-btn-lg md-hero-button md-hero-button-accent">
+            <span class="material-symbols-outlined">send</span>
+            <span>Insert into Page</span>
+          </button>
+          <button id="btnCopyDirect" class="g-btn g-btn-secondary g-btn-lg md-outlined-button">
+            <span class="material-symbols-outlined">content_copy</span>
+            <span>Copy Text</span>
+          </button>
+        </div>
+
+        <!-- Clean Accordion: Behind the Magic -->
+        <details class="g-accordion md-accordion">
+          <summary class="g-accordion-header md-accordion-header">
+            <div class="g-accordion-title md-accordion-title">
+              <span class="material-symbols-outlined g-icon-sm md-icon-sm">psychology</span>
+              <span>Behind the Response: 4-Stage EQ Model & Evidence Grounding</span>
+            </div>
+            <span class="material-symbols-outlined g-accordion-arrow md-accordion-arrow">expand_more</span>
+          </summary>
+          <div class="g-accordion-content md-accordion-content">
+            <div class="g-stages-flow md-stages-flow">
+              <div class="g-stage-item md-stage-item">
+                <span class="g-stage-badge md-stage-badge">Stage 1</span>
+                <div>
+                  <strong class="g-stage-name md-stage-name">Detect & Pause</strong>
+                  <p id="detailsStage1Text" class="g-stage-text md-stage-text"></p>
+                </div>
+              </div>
+              <div class="g-stage-item md-stage-item">
+                <span class="g-stage-badge md-stage-badge">Stage 2</span>
+                <div>
+                  <strong class="g-stage-name md-stage-name">Reappraise & Regulate</strong>
+                  <p id="detailsStage2Text" class="g-stage-text md-stage-text"></p>
+                </div>
+              </div>
+              <div class="g-stage-item md-stage-item">
+                <span class="g-stage-badge md-stage-badge">Stage 3</span>
+                <div>
+                  <strong class="g-stage-name md-stage-name">Empathetic Engagement</strong>
+                  <p id="detailsStage3Text" class="g-stage-text md-stage-text"></p>
+                </div>
+              </div>
+              <div class="g-stage-item md-stage-item">
+                <span class="g-stage-badge md-stage-badge">Stage 4</span>
+                <div>
+                  <strong class="g-stage-name md-stage-name">Collaborative Resolution</strong>
+                  <p id="detailsStage4Text" class="g-stage-text md-stage-text"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="g-grounding-box md-grounding-box">
+              <strong class="g-grounding-title md-grounding-title">Handbook Grounding:</strong>
+              <div id="detailsCitationsList" class="g-grounding-citations md-grounding-citations"></div>
+            </div>
+          </div>
+        </details>
+
+        <!-- Feedback Bar -->
+        <div class="g-feedback-row md-feedback-row">
+          <span class="g-feedback-question md-feedback-question">Was this response helpful?</span>
+          <div class="g-feedback-chips-group md-feedback-chips-group">
+            <button class="g-btn g-btn-secondary g-btn-sm" data-fb="accept">👍 Yes, accept</button>
+            <button class="g-btn g-btn-secondary g-btn-sm" data-fb="edit">✏️ Edited</button>
+            <button class="g-btn g-btn-secondary g-btn-sm" data-fb="reject">👎 No</button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Regression Benchmarks Sheet (Modal Dialog) -->
+    <div id="benchmarksModal" class="g-dialog-scrim md-dialog-scrim" style="display:none;">
+      <div class="g-dialog-surface md-dialog-surface">
+        <div class="g-dialog-header md-dialog-header">
+          <h2 class="g-dialog-title md-dialog-title">Gold Set Regression Benchmarks</h2>
+          <button id="closeBenchmarksModal" class="g-icon-btn md-icon-button">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div class="g-dialog-body md-dialog-body">
+          <p class="g-dialog-desc md-dialog-desc">Runs 6 high-stakes benchmark tasks across Email, Slack, and Strategy against the Managerial EQ Handbook.</p>
+          <div class="g-dialog-action-bar md-dialog-action-bar">
+            <button id="btnRunGoldSuite" class="g-btn g-btn-primary g-btn-sm md-filled-button md-button-sm">Run Benchmark Suite</button>
+            <span id="benchmarkProgressLabel" class="g-dialog-status md-dialog-status">Ready</span>
+          </div>
+          <div id="benchmarkResultsArea" class="g-benchmarks-list md-benchmarks-list"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../lib/rag/rag_engine.js"></script>
+  <script src="../lib/pdf_extractor.js"></script>
+  <script src="../lib/agents/context_collector.js"></script>
+  <script src="../lib/agents/retrieval_agent.js"></script>
+  <script src="../lib/agents/research_agent.js"></script>
+  <script src="../lib/agents/qa_agents.js"></script>
+  <script src="../lib/agents/benchmarking_agent.js"></script>
+  <script src="../lib/agents/llm_client.js"></script>
+  <script src="../lib/agents/local_engine.js"></script>
+  <script src="../lib/agents/doer_agent.js"></script>
+  <script src="../lib/agents/orchestrator.js"></script>
+  <script src="../lib/benchmarks/benchmark_runner.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic EQ Reply — Settings & Connect Agents</title>
+  <!-- Google Product Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Text:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400..600,0..1,0&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="options.css">
+  <script src="../lib/chrome_shim.js"></script>
+</head>
+<body>
+  <div class="options-container">
+    
+    <!-- Top Back Navigation to Sidepanel -->
+    <nav class="options-top-nav">
+      <button id="btnBackToSidepanel" class="back-nav-btn" type="button" title="Back to Sidepanel" aria-label="Back to Sidepanel">
+        <span class="material-symbols-outlined">arrow_back</span>
+        <span>Back to Sidepanel</span>
+      </button>
+    </nav>
+
+    <header class="options-header">
+      <div class="header-brand">
+        <img src="../lib/icons/icon48.png" alt="Logo" class="header-logo">
+        <div>
+          <h1 class="header-title">Agentic EQ Reply Settings</h1>
+          <p class="header-desc">Configure cloud AI models, connect private GitHub repositories via OAuth, and calibrate QA rubrics.</p>
+        </div>
+      </div>
+      <div class="header-tag">
+        <span>Manifest V3</span>
+      </div>
+    </header>
+
+    <main class="options-content">
+      
+      <!-- Card 1: Active Execution Mode Selector -->
+      <section class="settings-card" id="cardModeSelection">
+        <div class="card-header">
+          <h2 class="card-title">1. Active Execution Mode</h2>
+          <span class="card-subtitle">Choose which engine powers your drafts. Switch between offline deterministic EQ, cloud AI agents, or an attached GitHub repo.</span>
+        </div>
+
+        <div class="mode-options-grid" role="radiogroup" aria-label="Execution Mode Selection">
+          <label class="mode-option-card active" id="cardModeLocal" for="modeRadioLocal">
+            <input type="radio" name="executionMode" id="modeRadioLocal" value="local" checked>
+            <div class="mode-option-content">
+              <div class="mode-option-header">
+                <div class="mode-option-icon-box">
+                  <span class="material-symbols-outlined">memory</span>
+                </div>
+                <div class="mode-option-meta">
+                  <span class="mode-option-name">Local Offline</span>
+                  <span class="mode-option-badge">Offline Fallback</span>
+                </div>
+              </div>
+              <p class="mode-option-desc">Fast deterministic drafts grounded in 15 Managerial EQ protocols. Works 100% offline without API keys.</p>
+            </div>
+          </label>
+
+          <label class="mode-option-card" id="cardModeAgentic" for="modeRadioAgentic">
+            <input type="radio" name="executionMode" id="modeRadioAgentic" value="agentic">
+            <div class="mode-option-content">
+              <div class="mode-option-header">
+                <div class="mode-option-icon-box">
+                  <span class="material-symbols-outlined">smart_toy</span>
+                </div>
+                <div class="mode-option-meta">
+                  <span class="mode-option-name">Cloud AI Agent</span>
+                  <span class="mode-option-badge badge-cloud">Gemini / OpenAI / Claude</span>
+                </div>
+              </div>
+              <p class="mode-option-desc">Multi-agent reasoning with iterative research, tone calibration, and automated QA verification cycles.</p>
+            </div>
+          </label>
+
+          <label class="mode-option-card" id="cardModeGithub" for="modeRadioGithub">
+            <input type="radio" name="executionMode" id="modeRadioGithub" value="github">
+            <div class="mode-option-content">
+              <div class="mode-option-header">
+                <div class="mode-option-icon-box">
+                  <span class="material-symbols-outlined">link</span>
+                </div>
+                <div class="mode-option-meta">
+                  <span class="mode-option-name">Attach GitHub Repo</span>
+                  <span class="mode-option-badge badge-github">Custom Backend</span>
+                </div>
+              </div>
+              <p class="mode-option-desc">Link a repository to connect custom prompt templates, enterprise forks, or fine-tuned backend agents.</p>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Card 2: Cloud AI Agent Provider Configuration -->
+      <section class="settings-card">
+        <div class="card-header">
+          <h2 class="card-title">2. Connect Cloud AI Agent</h2>
+          <span class="card-subtitle">Connect OpenAI (GPT-4o, o1, o3-mini), Gemini, Claude, or custom OpenAI-compatible models.</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label" for="providerSelect">Choose AI Provider</label>
+            <select id="providerSelect" class="field-select">
+              <option value="gemini" selected>Google Gemini (Google AI Studio)</option>
+              <option value="openai">OpenAI (ChatGPT)</option>
+              <option value="anthropic">Anthropic (Claude)</option>
+              <option value="mistral">Mistral AI</option>
+              <option value="ollama">Local Ollama (Offline / No Key)</option>
+            </select>
+          </div>
+
+          <!-- Hidden advanced developer inputs for consumer simplicity -->
+          <div class="form-row-2" style="display:none;">
+            <div class="form-row">
+              <label class="field-label" for="modelInput">Model / Agent Name</label>
+              <input type="text" id="modelInput" class="field-input" value="gemini-flash-latest">
+            </div>
+            <div class="form-row" id="customEndpointRow">
+              <label class="field-label" for="customEndpointInput">API Endpoint Base URL</label>
+              <input type="text" id="customEndpointInput" class="field-input" value="https://generativelanguage.googleapis.com/v1beta">
+            </div>
+          </div>
+
+          <div class="form-row" id="apiKeyRow">
+            <label class="field-label" for="apiKeyInput">Secret API Key</label>
+            <div class="password-wrapper">
+              <input type="password" id="apiKeyInput" class="field-input" placeholder="Paste your API key (sk-... / Mistral API Key / AIzaSy...)">
+              <button id="toggleKeyVisibility" class="btn-subtle" type="button">Show</button>
+            </div>
+            <span class="field-help">Keys are securely stored in your private local browser storage only. Never transmitted to third parties.</span>
+          </div>
+
+          <div class="form-actions">
+            <button id="btnTestConnection" class="g-btn g-btn-secondary">Test Connection</button>
+            <span id="testConnectionStatus" class="status-msg"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card 3: Attach GitHub Repository Link -->
+      <section class="settings-card">
+        <div class="card-header">
+          <h2 class="card-title">3. Attach GitHub Repository Link</h2>
+          <span class="card-subtitle">Save your repository link to connect your custom agent backend or fine-tuned model later.</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-row">
+            <label class="field-label" for="githubRepoInput">GitHub Repository Link</label>
+            <input type="url" id="githubRepoInput" class="field-input" placeholder="https://github.com/organization/your-agent-repo">
+            <span class="field-help">Repository link is saved locally for later backend attachment. No OAuth credentials required.</span>
+          </div>
+
+          <div class="form-actions">
+            <button id="btnTestGithub" class="g-btn g-btn-secondary">
+              <span class="material-symbols-outlined g-btn-icon">link</span>
+              <span>Save Repository Link</span>
+            </button>
+            <span id="githubStatusMsg" class="status-msg"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card 4: QA & Benchmarking Governance -->
+      <section class="settings-card">
+        <div class="card-header">
+          <h2 class="card-title">4. QA & Benchmarking Governance</h2>
+          <span class="card-subtitle">Tune the 8-factor evaluation rubric, pass thresholds, and revision limits.</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="slider-header">
+              <label class="field-label" for="qaThresholdSlider">QA Pass Threshold</label>
+              <span id="thresholdValLabel" class="slider-val">85 / 100</span>
+            </div>
+            <input type="range" id="qaThresholdSlider" class="field-slider" min="60" max="95" value="85">
+            <span class="field-help">Drafts scoring below this threshold are returned to the Doer Agent with feedback.</span>
+          </div>
+
+          <div class="form-row">
+            <div class="slider-header">
+              <label class="field-label" for="maxRevisionsSlider">Max QA Revision Loops</label>
+              <span id="maxRevisionsLabel" class="slider-val">2 Revisions</span>
+            </div>
+            <input type="range" id="maxRevisionsSlider" class="field-slider" min="0" max="4" value="2">
+            <span class="field-help">Maximum number of automated correction iterations before presenting draft with warnings.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card 5: Primary Source of Truth (RAG Corpus) -->
+      <section class="settings-card">
+        <div class="card-header">
+          <h2 class="card-title">5. Primary Source of Truth (RAG Corpus)</h2>
+          <span class="card-subtitle">Active verified knowledge base details.</span>
+        </div>
+
+        <div class="corpus-stats-grid">
+          <div class="stat-box">
+            <div class="stat-label">Source Document</div>
+            <div class="stat-title">Managerial EQ Handbook (FINAL)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Corpus Size</div>
+            <div class="stat-num">36 Semantic Chunks</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Protocols Indexed</div>
+            <div class="stat-num">15 Core Executive Protocols</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Universal Model</div>
+            <div class="stat-num">4-Stage Real-Time Response</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Save Actions Bar -->
+      <div class="save-bar">
+        <button id="btnSaveSettings" class="g-btn g-btn-primary g-btn-lg">Save Settings</button>
+        <span id="saveStatusMsg" class="save-status"></span>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="../lib/agents/llm_client.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

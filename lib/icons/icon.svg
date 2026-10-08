@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="navyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a3a5c"/>
+      <stop offset="100%" stop-color="#0e1117"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a017"/>
+      <stop offset="100%" stop-color="#f5c542"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c8440a"/>
+      <stop offset="100%" stop-color="#e0581e"/>
+    </linearGradient>
+  </defs>
+  <!-- Background rounded squircle (Apple HIG style) -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#navyGrad)" stroke="#d4a017" stroke-width="2"/>
+  
+  <!-- Subtle inner shadow ring -->
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+
+  <!-- Agentic EQ Node Diagram (RAG & 4-Stage Core) -->
+  <!-- Top Node: Orchestrator / EQ Core -->
+  <circle cx="64" cy="38" r="16" fill="url(#goldGrad)"/>
+  <path d="M58 38 L62 42 L70 34" fill="none" stroke="#0e1117" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Left Node: RAG Knowledge -->
+  <circle cx="36" cy="82" r="12" fill="#0d7377"/>
+  <rect x="30" y="78" width="12" height="8" rx="1.5" fill="#f8f5ef"/>
+  <line x1="33" y1="81" x2="39" y2="81" stroke="#0d7377" stroke-width="1"/>
+  <line x1="33" y1="83" x2="37" y2="83" stroke="#0d7377" stroke-width="1"/>
+
+  <!-- Right Node: QA Evaluation -->
+  <circle cx="92" cy="82" r="12" fill="url(#redGrad)"/>
+  <circle cx="92" cy="82" r="6" fill="none" stroke="#f8f5ef" stroke-width="2"/>
+
+  <!-- Connecting Vector Edges -->
+  <line x1="54" y1="48" x2="42" y2="72" stroke="rgba(212,160,23,0.6)" stroke-width="2.5" stroke-dasharray="3,2"/>
+  <line x1="74" y1="48" x2="86" y2="72" stroke="rgba(200,68,10,0.6)" stroke-width="2.5" stroke-dasharray="3,2"/>
+  <line x1="48" y1="82" x2="80" y2="82" stroke="rgba(13,115,119,0.5)" stroke-width="2"/>
+
+  <!-- Central Pulse Ring -->
+  <circle cx="64" cy="65" r="5" fill="#f8f5ef"/>
+</svg>

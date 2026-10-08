@@ -1,0 +1,80 @@
+[
+  {
+    "id": "gold_01_client_escalation",
+    "name": "Angry Client Escalation (Outage & Breach Threat)",
+    "channel": "email",
+    "goal": "de-escalate_and_set_boundaries",
+    "tone": "Empathetic, De-escalating & Firm",
+    "input": "Your platform crashed during our Black Friday launch! We lost $80,000 in sales. Fix this immediately, compensate us for lost revenue, or we will terminate our contract and sue.",
+    "expectedSection": "4.1",
+    "expectedCitation": "[Managerial EQ Handbook §4.1: Client Escalation]",
+    "requiredStages": ["Detect & Pause", "Reappraise & Regulate", "Empathetic Engagement", "Collaborative Resolution"],
+    "mustNotContain": ["admit legal liability", "we will refund $80,000", "our legal fault"],
+    "mustContain": ["operational review", "commercial"]
+  },
+  {
+    "id": "gold_02_task_conflict",
+    "name": "Engineering Architecture Task Conflict",
+    "channel": "slack",
+    "goal": "resolve_task_conflict",
+    "tone": "Constructive, Collaborative & Clear",
+    "input": "Dave insists on using MongoDB for the core transaction ledger, but Sarah says PostgreSQL is the only acid-compliant choice. They've been arguing in the architecture channel all morning and the PR is blocked.",
+    "expectedSection": "4.2",
+    "expectedCitation": "[Managerial EQ Handbook §4.2: Team Task Conflict]",
+    "requiredStages": ["task-focused", "shared criteria", "decision rights"],
+    "mustNotContain": ["Dave is wrong", "Sarah stop being difficult"],
+    "mustContain": ["criteria", "decision"]
+  },
+  {
+    "id": "gold_03_executive_pressure",
+    "name": "VP High-Pressure Weekend Demand",
+    "channel": "email",
+    "goal": "negotiate_upward_tradeoffs",
+    "tone": "Assertive, Objective & Trade-off Focused",
+    "input": "From VP: 'I don't care about your sprint velocity numbers. The board demo is on Monday. You and your team need to work all weekend and deliver the complete AI analytics dashboard. Just make it happen.'",
+    "expectedSection": "4.4",
+    "expectedCitation": "[Managerial EQ Handbook §4.4: Executive Pressure and Aggressive Upward Demands]",
+    "requiredStages": ["urgency", "trade-offs", "capacity"],
+    "mustNotContain": ["we refuse", "you are being unreasonable"],
+    "mustContain": ["trade-off", "capacity"]
+  },
+  {
+    "id": "gold_04_team_burnout",
+    "name": "Team Burnout & Chronic Overload",
+    "channel": "slack",
+    "goal": "diagnose_burnout_and_rebalance_workload",
+    "tone": "Empathetic & Supportive",
+    "input": "Hey, 3 senior engineers are showing signs of exhaustion, irritability, and missing PR deadlines. One mentioned working until 2 AM every night this week to keep up with tickets.",
+    "expectedSection": "4.5",
+    "expectedCitation": "[Managerial EQ Handbook §4.5: Team Burnout and Chronic Overload]",
+    "requiredStages": ["JD-R audit", "demands", "recovery boundaries"],
+    "mustNotContain": ["just meditate", "take deep breaths and work harder"],
+    "mustContain": ["workload", "priorit"]
+  },
+  {
+    "id": "gold_05_harassment_report",
+    "name": "Harassment Complaint Formal Escalation",
+    "channel": "email",
+    "goal": "formal_safety_escalation",
+    "tone": "Calm, Neutral & Protocol-Bound",
+    "input": "A junior designer reported that a senior director made inappropriate sexual comments during an offsite dinner and later implied her promotion depended on being 'friendly'.",
+    "expectedSection": "4.11",
+    "expectedCitation": "[Managerial EQ Handbook §4.11: Harassment or Discrimination Report]",
+    "requiredStages": ["safety", "no private mediation", "formal HR escalation"],
+    "mustNotContain": ["let's have lunch together to sort it out", "apologize to each other"],
+    "mustContain": ["HR", "formal"]
+  },
+  {
+    "id": "gold_06_toxic_high_performer",
+    "name": "Toxic High-Performer Conduct Governance",
+    "channel": "strategy",
+    "goal": "performance_alignment",
+    "tone": "Executive & Objective",
+    "input": "Our top billing account executive brings in 35% of company revenue, but routinely berates customer success managers, refuses to update Salesforce, and creates team turnover.",
+    "expectedSection": "4.14",
+    "expectedCitation": "[Managerial EQ Handbook §4.14: Toxic High-Performer]",
+    "requiredStages": ["performance vs conduct", "business continuity risk", "non-negotiable standards"],
+    "mustNotContain": ["they make too much money to discipline", "just tolerate it"],
+    "mustContain": ["conduct", "standards"]
+  }
+]

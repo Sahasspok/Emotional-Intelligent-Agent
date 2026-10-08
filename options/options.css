@@ -1,0 +1,499 @@
+/* Google Enterprise Product Design Standards for Options Page */
+:root {
+  --g-font-display: 'Google Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --g-font-body: 'Google Sans Text', 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --color-navy: #1a3a5c;
+  --color-navy-hover: #12283e;
+  --color-navy-active: #0c1c2c;
+  --color-red: #c8440a;
+  --color-red-hover: #a93807;
+  --color-gold: #d4a017;
+  --color-teal: #0d7377;
+  --color-purple: #6b3fa0;
+  --color-ink: #1f1f1f;
+  --color-paper: #f4f6f9;
+  --color-light-bg: #edf1f7;
+  --color-green: #2d6a4f;
+
+  --bg-app: var(--color-paper);
+  --bg-card: #ffffff;
+  --text-primary: var(--color-ink);
+  --text-secondary: #5f6368;
+  --text-muted: #80868b;
+  --border-light: #d0d7de;
+  --border-subtle: #e8eaed;
+
+  --g-elevation-1: 0 1px 3px rgba(60, 64, 67, 0.12), 0 1px 2px rgba(60, 64, 67, 0.08);
+  --shadow-btn-base: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-btn-primary: 0 2px 4px rgba(26, 58, 92, 0.22), 0 1px 2px rgba(26, 58, 92, 0.12);
+  --shadow-btn-primary-hover: 0 4px 8px rgba(26, 58, 92, 0.28), 0 2px 4px rgba(26, 58, 92, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--g-font-body);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.options-container {
+  max-width: 800px;
+  margin: 32px auto 48px auto;
+  padding: 0 24px;
+}
+
+.options-top-nav {
+  margin-bottom: 20px;
+}
+
+.back-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  color: var(--color-navy);
+  font-family: var(--g-font-display);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 24px;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn-base);
+  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.back-nav-btn:hover {
+  background: var(--color-light-bg);
+  border-color: var(--color-navy);
+  transform: translateX(-3px);
+  box-shadow: 0 2px 6px rgba(26, 58, 92, 0.12);
+}
+
+.back-nav-btn:active {
+  transform: translateX(0);
+}
+
+.options-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--color-navy);
+  margin-bottom: 24px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+.header-title {
+  font-family: var(--g-font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-navy);
+  letter-spacing: -0.3px;
+}
+
+.header-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.header-tag span {
+  font-family: var(--g-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(26, 58, 92, 0.08);
+  color: var(--color-navy);
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(26, 58, 92, 0.2);
+}
+
+.settings-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  border-radius: 14px;
+  padding: 22px 26px;
+  box-shadow: var(--g-elevation-1);
+  margin-bottom: 20px;
+}
+
+.card-header {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.card-title {
+  font-family: var(--g-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.card-subtitle {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 3px;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-label {
+  font-family: var(--g-font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.field-select, .field-input {
+  font-family: var(--g-font-body);
+  font-size: 14.5px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: var(--text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field-select:focus, .field-input:focus {
+  border-color: var(--color-navy);
+  box-shadow: 0 0 0 3px rgba(26, 58, 92, 0.15);
+}
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-wrapper .field-input {
+  width: 100%;
+  padding-right: 70px;
+}
+
+.btn-subtle {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-family: var(--g-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.btn-subtle:hover {
+  background: var(--color-light-bg);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.field-help {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slider-val {
+  font-family: var(--g-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-navy);
+  background: var(--color-light-bg);
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+}
+
+.field-slider {
+  width: 100%;
+  accent-color: var(--color-navy);
+  height: 6px;
+  border-radius: 9999px;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.status-msg {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+/* Corpus Stats Grid */
+.corpus-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.stat-box {
+  background: var(--color-light-bg);
+  border: 1.5px solid var(--border-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.stat-title {
+  font-family: var(--g-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-top: 3px;
+}
+
+.stat-num {
+  font-family: var(--g-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-top: 3px;
+}
+
+/* Save Bar */
+.save-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding: 12px 0;
+}
+
+/* Tactile Buttons */
+.g-btn {
+  font-family: var(--g-font-display);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: var(--shadow-btn-base);
+}
+
+.g-btn:active {
+  transform: translateY(1.5px);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.g-btn-primary {
+  background: var(--color-navy);
+  color: #ffffff;
+  border-color: #10243a;
+  box-shadow: var(--shadow-btn-primary);
+}
+
+.g-btn-primary:hover {
+  background: var(--color-navy-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-btn-primary-hover);
+}
+
+.g-btn-primary:active {
+  background: var(--color-navy-active);
+  transform: translateY(1.5px);
+}
+
+.g-btn-secondary {
+  background: #ffffff;
+  color: var(--color-navy);
+  border-color: var(--border-light);
+}
+
+.g-btn-secondary:hover {
+  background: var(--color-light-bg);
+  border-color: #b0b8c2;
+  transform: translateY(-1px);
+}
+
+.g-btn-lg {
+  height: 46px;
+  padding: 0 24px;
+  font-size: 15px;
+}
+
+.save-status {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Active Execution Mode Radio Cards Grid
+   ========================================================================== */
+.mode-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.mode-option-card {
+  position: relative;
+  display: flex;
+  background: var(--bg-card);
+  border: 2px solid var(--border-light);
+  border-radius: 14px;
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: var(--shadow-btn-base);
+  user-select: none;
+}
+
+.mode-option-card input[type="radio"] {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-navy);
+  cursor: pointer;
+}
+
+.mode-option-card:hover {
+  border-color: var(--color-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 58, 92, 0.09);
+}
+
+.mode-option-card.active {
+  border-color: var(--color-navy);
+  background: #f8fafc;
+  box-shadow: 0 0 0 1px var(--color-navy), 0 4px 14px rgba(26, 58, 92, 0.1);
+}
+
+.mode-option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding-right: 22px;
+}
+
+.mode-option-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mode-option-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(26, 58, 92, 0.08);
+  color: var(--color-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mode-option-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mode-option-name {
+  font-family: var(--g-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.mode-option-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-red);
+  background: rgba(200, 68, 10, 0.1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.mode-option-badge.badge-cloud {
+  color: var(--color-green);
+  background: rgba(45, 106, 79, 0.1);
+}
+
+.mode-option-badge.badge-github {
+  color: var(--color-purple);
+  background: rgba(107, 63, 160, 0.1);
+}
+
+.mode-option-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
